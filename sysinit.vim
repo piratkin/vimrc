@@ -10,8 +10,10 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'Shougo/vimproc.vim'
 Plug 'Shougo/unite.vim'
 
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter' "
+" git
+"Plug 'tpope/vim-fugitive'
+"Plug 'airblade/vim-gitgutter'
+Plug 'jreybert/vimagit'
 
 " Syntax Check
 Plug 'scrooloose/syntastic'
@@ -26,6 +28,19 @@ call plug#end()
 let g:chromatica#responsive_mode = 1 "Chromatica provides a responsive mode that reparses and updates the hightlight as soon as you change the code 
 
 set background=dark
+
+let g:magit_enabled = 1
+let g:magit_git_cmd = "git"
+let g:magit_show_help = 1
+let g:magit_commit_title_limit = 300
+"let g:magit_default_show_all_files=[012]
+"let g:magit_default_fold_level=[012]
+"let g:magit_auto_foldopen=[01]
+"let g:magit_default_sections = ['info', 'global_help', 'commit', 'staged', 'unstaged']
+"let g:magit_warning_max_lines=val
+"let g:magit_discard_untracked_do_delete=[01]
+let g:magit_refresh_gitgutter = 1
+
 
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$', '\.git$'] "скрывать некоторые файлы или каталоги в дереве
@@ -131,7 +146,7 @@ let g:airline_enable_bufferline = 1 "
 let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#left_sep = ' '
 "let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved' " вид отображения расположения файла в tabline
+let g:airline#extensions#tabline#formatter = 'unique_tail' " вид отображения расположения файла в tabline
 
 " для перемещения между окнами
 "map <silent> <C-h> :call WinMove('h')<CR>
