@@ -16,6 +16,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'Shougo/vimproc.vim'
 Plug 'Shougo/unite.vim'
 
+Plug 'universal-ctags/ctags'
+
 " git
 "Plug 'tpope/vim-fugitive'
 "Plug 'airblade/vim-gitgutter'
@@ -30,6 +32,37 @@ Plug 'sickill/vim-monokai'
 Plug 'arakashic/chromatica.nvim'
 
 call plug#end()
+
+" во избежание лишней путаницы использовать системный буфер обмена вместо буфера Vim
+if has("unix")
+    set clipboard=unnamedplus
+elseif has("win32")
+    set clipboard=unnamed
+endif
+
+function! EnRuHighlight()
+        if &iminsert == 0
+            execute "AirlineTheme dark"
+            set iminsert=1
+        else
+            execute "AirlineTheme simple"
+            set iminsert=0
+        endif
+endfunction
+
+" Настраиваем переключение раскладок клавиатуры по <C-^>
+set keymap=russian-jcukenwin
+
+" Раскладка по умолчанию - английская
+set iminsert=0
+
+" аналогично для строки поиска и ввода команд
+set imsearch=0
+
+"{{{ swith language En-Ru
+nmap <leader>w <ESC>:call EnRuHighlight()<CR>
+imap <leader>w <ESC>:call EnRuHighlight()<CR>a
+"}}}
 
 let g:chromatica#responsive_mode = 1 "Chromatica provides a responsive mode that reparses and updates the hightlight as soon as you change the code 
 
@@ -51,6 +84,7 @@ let g:magit_refresh_gitgutter = 1
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$', '\.git$'] "скрывать некоторые файлы или каталоги в дереве
 let NERDTreeQuitOnOpen = 1 "дерево папок автоматически закрываться при открытии файла
+let NERDTreeShowHidden = 1
 let g:nerdtree_tabs_open_on_gui_startup = 0
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
@@ -84,7 +118,6 @@ if has("nvim")
 endif
 set confirm " использовать диалоги вместо сообщений об ошибках
 set visualbell " вместо писка бипером мигать курсором при ошибках ввода
-set clipboard=unnamed " во избежание лишней путаницы использовать системный буфер обмена вместо буфера Vim
 set title " показывать имя буфера в заголовке терминала
 set history=128 " хранить больше истории команд
 set undolevels=2048 " хранить историю изменений числом N
@@ -146,15 +179,71 @@ let g:syntastic_warning_symbol = "⚠"
 set laststatus=2
 set noshowmode  
 let g:airline_theme = 'simple'
+let g:Powerline_symbols ='unicode'
 let g:airline_powerline_fonts = 0
+if has("unix")
+    "set guifont=Liberation\ Mono\ for\ Powerline\ 10 
+    "set guifont=Liberation_Mono_for_Powerline:h10 
+    "let g:airline_powerline_fonts = 1
+    let g:Powerline_symbols = 'fancy'
+    "set fillchars+=stl:\ ,stlnc:\
+    "let g:Powerline_mode_V = "V·LINE"
+    "let g:Powerline_mode_cv = "V·BLOCK"
+    "let g:Powerline_mode_S = "S·LINE"
+    "let g:Powerline_mode_cs = "S·BLOCK"
+endif
 let g:airline_enable_fugitive = 1 " проверка синтаксиса
 let g:airline_enable_syntastic = 1 " взаимодействие с git-ом
 let g:airline#extensions#hunks#enabled = 1
 let g:airline_enable_bufferline = 1 "
 let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#left_sep = ' '
-"let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'unique_tail' " вид отображения расположения файла в tabline
+let g:airline#extensions#keymap#enabled = '0' " прячем 'keymap: russian-jcukenwin' из панели
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.maxlinenr = '㏑'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''
+
+" old vim-powerline symbols
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+let g:airline_symbols.linenr = '⭡'
 
 " для перемещения между окнами
 "map <silent> <C-h> :call WinMove('h')<CR>
@@ -174,4 +263,5 @@ function! WinMove(key)
     exec "wincmd ".a:key
   endif
 endfunction
+
 
