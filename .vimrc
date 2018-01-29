@@ -1,7 +1,9 @@
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+if has("unix")
+    if empty(glob('~/.vim/autoload/plug.vim'))
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -184,7 +186,7 @@ let g:airline_powerline_fonts = 0
 if has("unix")
     "set guifont=Liberation\ Mono\ for\ Powerline\ 10 
     "set guifont=Liberation_Mono_for_Powerline:h10 
-    "let g:airline_powerline_fonts = 1
+    let g:airline_powerline_fonts = 1
     let g:Powerline_symbols = 'fancy'
     "set fillchars+=stl:\ ,stlnc:\
     "let g:Powerline_mode_V = "V·LINE"
