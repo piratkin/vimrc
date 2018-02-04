@@ -68,8 +68,6 @@ imap <leader>w <ESC>:call EnRuHighlight()<CR>a
 
 let g:chromatica#responsive_mode = 1 "Chromatica provides a responsive mode that reparses and updates the hightlight as soon as you change the code 
 
-set background=dark
-
 let g:magit_enabled = 1
 let g:magit_git_cmd = "git"
 let g:magit_show_help = 1
@@ -266,4 +264,8 @@ function! WinMove(key)
   endif
 endfunction
 
-
+" граница 80 символов
+if exists('+colorcolumn')
+	highlight ColorColumn ctermbg=darkred guibg=#32322d
+    let &colorcolumn=join(range(81,999),",")
+endif
