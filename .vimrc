@@ -1,12 +1,16 @@
 if has("unix")
-    if empty(glob('~/.vim/autoload/plug.vim'))
-        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    if empty(glob("~/.vim/autoload/plug.vim"))
+        execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+        autocmd VimEnter * PlugInstall --sync
     endif
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
+
+" Automatically install missing plugins on startup
+if !empty(filter(copy(g:plugs), '!isdirectory(v:val.dir)'))
+   autocmd VimEnter * PlugInstall | q
+endif
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 "Plug 'bling/vim-bufferline'
@@ -34,6 +38,7 @@ Plug 'sickill/vim-monokai'
 Plug 'arakashic/chromatica.nvim'
 
 call plug#end()
+
 
 " во избежание лишней путаницы использовать системный буфер обмена вместо буфера Vim
 if has("unix")
@@ -162,10 +167,10 @@ function! GetColorSchemes()
    \)))
 endfunction
 let s:schemes = GetColorSchemes()
-if index(s:schemes, 'monokai') >= 0
-   colorscheme monokai
-elseif index(s:schemes, 'desert') >= 0
+if index(s:schemes, 'desert') >= 0
    colorscheme desert
+elseif index(s:schemes, 'monokai) >= 0
+   colorscheme monokai
 endif
 
 " настройки Syntastic 
@@ -265,7 +270,7 @@ function! WinMove(key)
 endfunction
 
 " граница 80 символов
-if exists('+colorcolumn')
-	highlight ColorColumn ctermbg=darkred guibg=#32322d
-    let &colorcolumn=join(range(81,999),",")
-endif
+"if exists('+colorcolumn')
+"	highlight ColorColumn ctermbg=darkred guibg=#32322d
+"    let &colorcolumn=join(range(81,999),",")
+"endif
