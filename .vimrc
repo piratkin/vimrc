@@ -30,7 +30,7 @@ Plug 'universal-ctags/ctags'
 Plug 'jreybert/vimagit'
 
 " Syntax Check
-Plug 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
 
 " Color schemes
 Plug 'sickill/vim-monokai'
@@ -174,11 +174,11 @@ elseif index(s:schemes, 'monokai) >= 0
 endif
 
 " настройки Syntastic 
-let g:syntastic_check_on_wq = 1
-let g:syntastic_auto_jump = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_error_symbol = "▶▶"
-let g:syntastic_warning_symbol = "⚠"
+"let g:syntastic_check_on_wq = 1
+"let g:syntastic_auto_jump = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_error_symbol = "▶▶"
+"let g:syntastic_warning_symbol = "⚠"
 
 " настройки Vim-Airline
 set laststatus=2
